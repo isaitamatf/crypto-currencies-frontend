@@ -54,6 +54,9 @@ const Dropdown = (props) => {
       >
         {showOption()}
       </div>
+      <div className={`dropdown-arrow ${dropdownIsOpen ? 'opened' : ''}`}>
+        <img alt="arrow" src={require("../../assets/arrow.png")} />
+      </div>
       <div className="dropdown-options">{showOptions()}</div>
     </div>
   );
