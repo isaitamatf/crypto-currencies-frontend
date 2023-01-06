@@ -1,0 +1,38 @@
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  > .toolbar-header {
+    padding: 12px 0;
+    width: 100%;
+    > span {
+      color: #000000;
+      font-size: 24px;
+      font-weight: 700;
+    }
+  }
+  > .toolbar-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 12px 0;
+    width: 100%;
+    > .toolbar-container-row {
+      display: flex;
+      flex-direction: column;
+      margin: 0 8px;
+      > .toolbar-container-row-label {
+        color: #9C9C9C;
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+    > .toolbar-container-row:first-child {
+      margin-left: 0;
+    }
+    > .toolbar-container-row:last-child {
+      margin-right: 0;
+    }
+  }
+}
