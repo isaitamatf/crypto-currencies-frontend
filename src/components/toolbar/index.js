@@ -50,7 +50,7 @@ const Toolbar = () => {
       </div>
       <div className="toolbar-container">
         <div className="toolbar-container-row">
-          <label className="toolbar-container-row-label">Currency from</label>
+          <label>Currency from</label>
           <Dropdown
             setOption={setCurrencyFrom}
             options={currencyFromOptions}
@@ -58,11 +58,11 @@ const Toolbar = () => {
           />
         </div>
         <div className="toolbar-container-row">
-          <label className="toolbar-container-row-label">Amount</label>
+          <label>Amount</label>
           <input />
         </div>
         <div className="toolbar-container-row">
-          <label className="toolbar-container-row-label">Currency to</label>
+          <label>Currency to</label>
           <Dropdown
             setOption={setCurrencyTo}
             options={currencyToOptions}
@@ -70,10 +70,10 @@ const Toolbar = () => {
           />
         </div>
         <div className="toolbar-container-row">
-          <label className="toolbar-container-row-label">Amount</label>
+          <label>Amount</label>
           <input />
         </div>
-        <div className="toolbar-container-row">
+        <div className="toolbar-container-row action">
           <Button backgroundColor="#49CD5E" color="#FFFFFF" text="Save" />
         </div>
       </div>
