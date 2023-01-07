@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Dropdown } from "../index";
 import { CRYPTOS, CURRENCIES } from '../../services/constants';
-import "./style.scss";
 
 const Toolbar = () => {
   const [ currencyFrom, setCurrencyFrom ] = useState(CRYPTOS[0].value);
