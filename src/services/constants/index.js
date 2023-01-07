@@ -1,4 +1,5 @@
-const currencyFromOptions = [
+export const API_URL = "http://api.coinlayer.com/api/live?access_key=d88a68fc8b0b821b39f6f78090e1cf6a";
+export const CRYPTOS = [
   {
     name: "BTC - Bitcoin",
     value: "btc",
@@ -16,8 +17,7 @@ const currencyFromOptions = [
     value: "ltc",
   },
 ];
-
-const currencyToOptions = [
+export const CURRENCIES = [
   {
     name: "EUR - Euro",
     value: "eur",
@@ -35,5 +35,3 @@ const currencyToOptions = [
     value: "cad",
   },
 ];
-
-export { currencyFromOptions, currencyToOptions };

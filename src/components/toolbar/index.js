@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { Button, Dropdown } from "../index";
-import { currencyFromOptions, currencyToOptions } from '../../services/constants';
+import { CRYPTOS, CURRENCIES } from '../../services/constants';
 import "./style.scss";
 
 const Toolbar = () => {
-  const [ currencyFrom, setCurrencyFrom ] = useState(currencyFromOptions[0].value);
+  const [ currencyFrom, setCurrencyFrom ] = useState(CRYPTOS[0].value);
   const [ amount1, setAmount1 ] = useState(1);
-  const [ currencyTo, setCurrencyTo ] = useState(currencyToOptions[0].value);
+  const [ currencyTo, setCurrencyTo ] = useState(CURRENCIES[0].value);
   const [ amount2, setAmount2] = useState(0);
-  
-  const exchangeCurrency = () => {};
   
   return (
     <div className="toolbar">
@@ -21,7 +19,7 @@ const Toolbar = () => {
           <label>Currency from</label>
           <Dropdown
             setOption={setCurrencyFrom}
-            options={currencyFromOptions}
+            options={CRYPTOS}
             optionSelected={currencyFrom}
           />
         </div>
@@ -36,7 +34,7 @@ const Toolbar = () => {
           <label>Currency to</label>
           <Dropdown
             setOption={setCurrencyTo}
-            options={currencyToOptions}
+            options={CURRENCIES}
             optionSelected={currencyTo}
           />
         </div>
