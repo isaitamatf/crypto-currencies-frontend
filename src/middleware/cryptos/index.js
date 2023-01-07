@@ -1,10 +1,10 @@
 import axios from "axios";
 import { API_URL } from '../../services/constants';
 
-export function getRates() {
+export function getCryptos() {
   const options = {
     method: "GET",
-    url: API_URL,
+    url: `${API_URL}/cryptos`,
     params: { output: "JSON" },
   };
   return axios

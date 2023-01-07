@@ -1,0 +1,1 @@
+export { getCryptos } from './cryptos';
