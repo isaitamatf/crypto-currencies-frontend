@@ -76,7 +76,7 @@ const Dropdown = ({ optionSelected, options, setOption }) => {
    */
   const showOption = () => {
     const optionSelectedFound = findOptionSelected();
-    if (optionSelectedFound) {
+    if (optionSelectedFound && !dropdownIsOpen) {
       return (
         <>
           <img

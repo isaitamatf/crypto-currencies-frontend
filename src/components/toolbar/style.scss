@@ -38,8 +38,11 @@
         height: 42px;
         padding: 0 16px;
       }
+      > span {
+        height: 32px;
+      }
     }
-    > .toolbar-container-row.action {
+    > .toolbar-container-row.flex-end {
       justify-content: flex-end;
     }
   }

@@ -41,8 +41,13 @@ const currencyToOptions = [
 ];
 
 const Toolbar = () => {
-  const [ currencyFrom, setCurrencyFrom ] = useState("");
-  const [ currencyTo, setCurrencyTo ] = useState("");
+  const [ currencyFrom, setCurrencyFrom ] = useState(currencyFromOptions[0].value);
+  const [ amount1, setAmount1 ] = useState(1);
+  const [ currencyTo, setCurrencyTo ] = useState(currencyToOptions[0].value);
+  const [ amount2, setAmount2] = useState(0);
+  
+  const exchangeCurrency = () => {};
+  
   return (
     <div className="toolbar">
       <div className="toolbar-header">
@@ -61,6 +66,9 @@ const Toolbar = () => {
           <label>Amount</label>
           <input type="number" />
         </div>
+        <div className="toolbar-container-row flex-end">
+          <span>=</span>
+        </div>
         <div className="toolbar-container-row">
           <label>Currency to</label>
           <Dropdown
@@ -73,7 +81,7 @@ const Toolbar = () => {
           <label>Amount</label>
           <input />
         </div>
-        <div className="toolbar-container-row action">
+        <div className="toolbar-container-row flex-end">
           <Button backgroundColor="#49CD5E" color="#FFFFFF" text="Save" />
         </div>
       </div>
