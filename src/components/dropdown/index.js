@@ -62,7 +62,7 @@ const Dropdown = ({ optionSelected, options, setOption }) => {
             onClick={handleOnClick}
             key={value}
           >
-            <img alt={name} src={require(`../../assets/${value}.png`)} />
+            <img alt={name} src={require(`../../assets/img/${value}.png`)} />
             <span>{name}</span>
           </div>
         );
@@ -81,7 +81,7 @@ const Dropdown = ({ optionSelected, options, setOption }) => {
         <>
           <img
             alt={optionSelectedFound.name}
-            src={require(`../../assets/${optionSelectedFound.value}.png`)}
+            src={require(`../../assets/img/${optionSelectedFound.value}.png`)}
           />
           <span>{optionSelectedFound.name}</span>
         </>
@@ -106,7 +106,7 @@ const Dropdown = ({ optionSelected, options, setOption }) => {
         {showOption()}
       </div>
       <div className={`dropdown-arrow ${dropdownIsOpen ? "opened" : ""}`}>
-        <img alt="arrow" src={require("../../assets/arrow.png")} />
+        <img alt="arrow" src={require("../../assets/img/arrow.png")} />
       </div>
       <div className="dropdown-options">{showOptions()}</div>
     </div>
