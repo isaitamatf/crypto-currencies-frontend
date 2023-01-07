@@ -59,7 +59,7 @@ const Toolbar = () => {
         </div>
         <div className="toolbar-container-row">
           <label>Amount</label>
-          <input />
+          <input type="number" />
         </div>
         <div className="toolbar-container-row">
           <label>Currency to</label>

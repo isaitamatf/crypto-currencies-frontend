@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import './style.scss'
 
-const Dropdown = (props) => {
-  const {
-    optionSelected,
-    options,
-    setOption
-  } = props;
-  const [ dropdownIsOpen, setDropdownIsOpen ] = useState(false);
+const Dropdown = ({ optionSelected, options, setOption }) => {
+  const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
 
   const showOptions = () => {
     if (dropdownIsOpen && options && options.length > 0) {
@@ -19,7 +14,15 @@ const Dropdown = (props) => {
         };
         const optionSelectedFound = findOptionSelected();
         return (
-          <div className={`dropdown-option ${optionSelectedFound && optionSelectedFound.value === option.value ? 'selected' : ''}`} onClick={handleOnClick} key={value}>
+          <div
+            className={`dropdown-option ${
+              optionSelectedFound && optionSelectedFound.value === option.value
+                ? "selected"
+                : ""
+            }`}
+            onClick={handleOnClick}
+            key={value}
+          >
             <img alt={name} src={require(`../../assets/${value}.png`)} />
             <span>{name}</span>
           </div>
@@ -41,10 +44,11 @@ const Dropdown = (props) => {
         </>
       );
     }
-    return <span>Select</span>; 
+    return <span>Select</span>;
   };
 
-  const findOptionSelected = () => options.find((o) => o.value === optionSelected);
+  const findOptionSelected = () =>
+    options.find((o) => o.value === optionSelected);
 
   return (
     <div className="dropdown">
@@ -54,7 +58,7 @@ const Dropdown = (props) => {
       >
         {showOption()}
       </div>
-      <div className={`dropdown-arrow ${dropdownIsOpen ? 'opened' : ''}`}>
+      <div className={`dropdown-arrow ${dropdownIsOpen ? "opened" : ""}`}>
         <img alt="arrow" src={require("../../assets/arrow.png")} />
       </div>
       <div className="dropdown-options">{showOptions()}</div>

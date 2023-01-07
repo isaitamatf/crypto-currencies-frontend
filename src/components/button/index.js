@@ -1,13 +1,7 @@
 import React from "react";
 import './style.scss';
 
-const Button = (props) => {
-  const {
-    backgroundColor,
-    borderColor,
-    color,
-    text
-  } = props;
+const Button = ({ backgroundColor, borderColor, color, text }) => {
   const buttonStyle = {
     backgroundColor: backgroundColor || "#FFFFFF",
     borderColor: borderColor || "#000000",
@@ -16,7 +10,7 @@ const Button = (props) => {
   };
   return (
     <button className="button" style={buttonStyle}>
-      {text || ''}
+      {text || ""}
     </button>
   );
 };
