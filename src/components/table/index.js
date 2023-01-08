@@ -1,38 +1,65 @@
 import React from "react";
 import Moment from 'react-moment';
 
-const Table = ({ data, sort, setSort }) => {
+/**
+ * @description Table component
+ * @param {Array} data Array of history exchanges
+ * @param {string} sort Column name by sort
+ * @param {Function} setSort Function to change the sort column
+ * @returns {JSX}
+ */
+export const Table = ({ data, sort, setSort }) => {
+  /**
+   * @description Function that check if the column is sorted
+   * @param {string} column Column name
+   * @returns {string}
+   */
   const checkColumnSorted = (column) => {
     if (sort.search(column) > -1) {
-      if (sort.search('-') > -1) {
-        return 'down';
+      if (sort.search("-") > -1) {
+        return "down";
       }
-      return 'up'
+      return "up";
     }
   };
-
+  /**
+   * @description Function that set the column name for sort
+   * @param {string} column Column name
+   */
   const handleOnClick = (column) => {
     const columnChecked = checkColumnSorted(column);
     if (columnChecked) {
-      if (columnChecked === 'down') {
+      if (columnChecked === "down") {
         setSort(`${column}`);
       } else {
-        setSort('');
+        setSort("");
       }
     } else {
       setSort(`${column}-`);
     }
-  }
-
+  };
+  /**
+   * @description Function that show the arrow image
+   * @param {string} column Column name
+   * @returns {JSX}
+   */
   const showSortImage = (column) => {
     let html = <></>;
     const columnChecked = checkColumnSorted(column);
     if (columnChecked) {
-      html = <img alt={columnChecked} src={require(`../../assets/img/sort-${columnChecked}.png`)} />;
+      html = (
+        <img
+          alt={columnChecked}
+          src={require(`../../assets/img/sort-${columnChecked}.png`)}
+        />
+      );
     }
     return html;
-  }
-
+  };
+  /**
+   * @description Function that show all the rows into the table
+   * @returns {JSX}
+   */
   const showData = () => {
     if (data && data.length > 0) {
       return data.map((d) => {
@@ -51,7 +78,6 @@ const Table = ({ data, sort, setSort }) => {
       });
     }
   };
-
   return (
     <div className="table">
       <table>
@@ -83,12 +109,8 @@ const Table = ({ data, sort, setSort }) => {
             </td>
           </tr>
         </thead>
-        <tbody>
-          {showData()}
-        </tbody>
+        <tbody>{showData()}</tbody>
       </table>
     </div>
   );
 };
-
-export { Table };

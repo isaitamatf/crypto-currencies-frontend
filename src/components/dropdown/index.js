@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 
 /**
- * @description
- * @param {*} ref 
- * @param {*} dropdownIsOpen 
- * @param {*} setDropdownIsOpen 
+ * @description Function to be called when clicking outside the component
+ * @param {Dropdown} ref Dropdown component reference
+ * @param {boolean} dropdownIsOpen Boolean indicating if the dropdown is open
+ * @param {Function} setDropdownIsOpen Function that opens and closes the dropdown
  */
 function useOutsideAlerter(ref, dropdownIsOpen, setDropdownIsOpen) {
   useEffect(() => {
@@ -26,21 +26,21 @@ function useOutsideAlerter(ref, dropdownIsOpen, setDropdownIsOpen) {
 
 /**
  * @description Dropdown component
+ * @param {boolean} isMobile Boolean that indicates if it is in responsive mode
  * @param {string} optionSelected
- * @param {Array} options
+ * @param {Array} options Array of options
  * @param {Function} setOption
- * @returns JSX
+ * @returns {JSX}
  */
-const Dropdown = ({ isMobile, optionSelected, options, setOption }) => {
-  //
+export const Dropdown = ({ isMobile, optionSelected, options, setOption }) => {
+  // Hook opening and closing dropdown
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
-  //
+  // Dropdown reference
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, dropdownIsOpen, setDropdownIsOpen);
-
   /**
-   * @description
-   * @returns JSX
+   * @description Function that show all the options
+   * @returns {JSX}
    */
   const showOptions = () => {
     if (dropdownIsOpen && options && options.length > 0) {
@@ -61,27 +61,34 @@ const Dropdown = ({ isMobile, optionSelected, options, setOption }) => {
             onClick={handleOnClick}
             key={value}
           >
-            {!isMobile ? <img alt={name} src={require(`../../assets/img/${value}.png`)} /> : <></>}
+            {!isMobile ? (
+              <img alt={name} src={require(`../../assets/img/${value}.png`)} />
+            ) : (
+              <></>
+            )}
             <span>{name}</span>
           </div>
         );
       });
     }
   };
-
   /**
-   * @description
-   * @returns JSX
+   * @description Function that show the option selected
+   * @returns {JSX}
    */
   const showOption = () => {
     const optionSelectedFound = findOptionSelected();
     if (optionSelectedFound && !dropdownIsOpen) {
       return (
         <>
-          {!isMobile ? (<img
-            alt={optionSelectedFound.name}
-            src={require(`../../assets/img/${optionSelectedFound.value}.png`)}
-          />) : <></>}
+          {!isMobile ? (
+            <img
+              alt={optionSelectedFound.name}
+              src={require(`../../assets/img/${optionSelectedFound.value}.png`)}
+            />
+          ) : (
+            <></>
+          )}
           <span>{optionSelectedFound.name}</span>
         </>
       );
@@ -90,8 +97,8 @@ const Dropdown = ({ isMobile, optionSelected, options, setOption }) => {
   };
 
   /**
-   * @description
-   * @returns Object
+   * @description Function that find the option selected from the main array
+   * @returns {Object}
    */
   const findOptionSelected = () =>
     options.find((o) => o.value === optionSelected);
@@ -111,5 +118,3 @@ const Dropdown = ({ isMobile, optionSelected, options, setOption }) => {
     </div>
   );
 };
-
-export { Dropdown };

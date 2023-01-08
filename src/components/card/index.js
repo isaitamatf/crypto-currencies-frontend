@@ -2,9 +2,18 @@ import React, { useState } from "react";
 import { Button } from '../../components';
 import Moment from 'react-moment';
 
+/**
+ * @description Card component
+ * @param {Object} data Object of the exchange history
+ * @returns {JSX}
+ */
 export const Card = ({ data }) => {
+  // Hook opening and closing modal
   const [isOpen, setIsOpen] = useState(false);
-
+  /**
+   * @description Internal modal component
+   * @returns {JSX}
+   */
   const Modal = () => {
     return (
       <div className="modal">
@@ -61,13 +70,12 @@ export const Card = ({ data }) => {
       </div>
     );
   };
-
   return (
     <>
       <div className="card" onClick={() => setIsOpen(true)}>
         <div className="card-title">
           {data.currencyFrom}
-          <span>{'->'}</span>
+          <span>{"->"}</span>
           {data.currencyTo}
         </div>
         <div className="card-subtitle">

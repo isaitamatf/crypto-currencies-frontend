@@ -2,16 +2,29 @@ import React, { useEffect, useState } from "react";
 import { Button, Dropdown } from "../../components";
 import { CURRENCY_SYMBOLS } from '../../services/constants';
 
-const Toolbar = ({ isMobile, cryptos, currencies, rates, handleOnSave }) => {
+/**
+ * @description Toolbar component
+ * @param {boolean} isMobile Boolean that indicates if it is in responsive mode
+ * @param {Array} cryptos Array of the cryptos currencies
+ * @param {Array} currencies Array of the currencies
+ * @param {Array} rates Array with all the rates between cryptos and currencies
+ * @param {Function} handleOnSave Function that save the exchange selected
+ * @returns {JSX}
+ */
+export const Toolbar = ({ isMobile, cryptos, currencies, rates, handleOnSave }) => {
+  // Hook that select the currency from
   const [currencyFrom, setCurrencyFrom] = useState(
     cryptos ? cryptos[0].value : ""
   );
+  // Hook that select the currency to
   const [currencyTo, setCurrencyTo] = useState(
     currencies ? currencies[0].value : ""
   );
+  // Hook that select the amount from
   const [amount1, setAmount1] = useState(1);
+  // Hook that select the amount to
   const [amount2, setAmount2] = useState(0);
-
+  // Hook that find the rate and set the value of the currency
   useEffect(() => {
     const rateFound = rates.find(
       (r) => r.currencyFrom === currencyFrom && r.currencyTo === currencyTo
@@ -19,7 +32,10 @@ const Toolbar = ({ isMobile, cryptos, currencies, rates, handleOnSave }) => {
     const result = amount1 * rateFound.rate;
     setAmount2(parseFloat(result.toFixed(2)));
   }, [rates, currencyFrom, currencyTo, amount1]);
-
+  /**
+   * @description Function that set amount from
+   * @param {*} e 
+   */
   const onChangeAmount1 = (e) => {
     if (e && e.target) {
       const value = parseFloat(e.target.value);
@@ -32,7 +48,10 @@ const Toolbar = ({ isMobile, cryptos, currencies, rates, handleOnSave }) => {
       }
     }
   };
-
+  /**
+   * @description Function that show the amount to formatted
+   * @returns {JSX}
+   */
   const showAmount2Value = () => {
     if (currencyTo) {
       const currentSymbol = CURRENCY_SYMBOLS.find(
@@ -41,9 +60,14 @@ const Toolbar = ({ isMobile, cryptos, currencies, rates, handleOnSave }) => {
       return `${currentSymbol.symbol} ${amount2}`;
     }
   };
-
+  /**
+   * @description Function that check is inactive
+   * @returns {boolean}
+   */
   const buttonIsInactive = () => (amount1 <= 0 ? true : false);
-
+  /**
+   * @description Function that send the object for save the exchange
+   */
   const handleOnClick = () => {
     const historySaved = {
       date: new Date().toISOString(),
@@ -55,7 +79,6 @@ const Toolbar = ({ isMobile, cryptos, currencies, rates, handleOnSave }) => {
     };
     handleOnSave(historySaved);
   };
-
   return (
     <div className="toolbar">
       <div className="toolbar-header">
@@ -112,5 +135,3 @@ const Toolbar = ({ isMobile, cryptos, currencies, rates, handleOnSave }) => {
     </div>
   );
 };
-
-export { Toolbar };

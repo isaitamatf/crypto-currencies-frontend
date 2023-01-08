@@ -5,8 +5,7 @@ import './App.scss';
 import { useMediaQuery } from "react-responsive";
 
 async function getCryptosPromise() {
-  const response = getCryptos();
-  return await response;
+  return await getCryptos();
 };
 
 async function getCurrenciesPromise() {
@@ -21,12 +20,18 @@ async function getHistoryPromise() {
   return await getHistory();
 };
 
+/**
+ * @description Main app render
+ * @returns {JSX}
+ */
 function App() {
+  // Constants that check is the screen is responsive
   const isMobile = useMediaQuery({
     query: "(max-width: 786px)",
   });
-
-  const [ cryptos, setCryptos ] = useState();
+  // Hook that save the cryptos from the API
+  const [cryptos, setCryptos] = useState();
+  // If the cryptos array doesn't exist then call the GET function
   useEffect(() => {
     if (!cryptos) {
       getCryptosPromise().then((response) => {
@@ -34,8 +39,9 @@ function App() {
       });
     }
   }, [cryptos]);
-  
-  const [ currencies, setCurrencies ] = useState();
+  // Hook that save the currencies from the API
+  const [currencies, setCurrencies] = useState();
+  // If the currencies array doesn't exist then call the GET function
   useEffect(() => {
     if (!currencies) {
       getCurrenciesPromise().then((response) => {
@@ -43,8 +49,9 @@ function App() {
       });
     }
   }, [currencies]);
-  
-  const [ rates, setRates ] = useState();
+  // Hook that save the rates from the API
+  const [rates, setRates] = useState();
+  // If the rates array doesn't exist then call the GET function
   useEffect(() => {
     if (!rates) {
       getRatesPromise().then((response) => {
@@ -53,7 +60,9 @@ function App() {
     }
   }, [rates]);
 
+  // Hook that save the history from the API
   const [history, setHistory] = useState();
+  // If the history array doesn't exist then call the GET function
   useEffect(() => {
     if (!history) {
       getHistoryPromise().then((response) => {
@@ -61,27 +70,30 @@ function App() {
       });
     }
   }, [history]);
-
+  // Hook that show the popup after submit the exchange
   const [exchangeSubmitted, setExchangeSubmitted] = useState(false);
   useEffect(() => {
     if (exchangeSubmitted) {
       setTimeout(() => {
         setExchangeSubmitted(false);
-      }, 10000)
+      }, 10000);
     }
   }, [exchangeSubmitted]);
-
+  /**
+   * @description Function that create the new history
+   * @param {Object} history Object of history
+   */
   const handleOnSave = (history) => {
     postHistory(history, setHistory, setExchangeSubmitted);
-  }
-
+  };
+  // Hook that sort the column selected
   const [sort, setSort] = useState("");
   useEffect(() => {
     if (sort) {
-      const desc = sort.search('-');
+      const desc = sort.search("-");
       const historySorted = history.sort((a, b) => {
         if (desc > -1) {
-          const column = sort.replace('-','');
+          const column = sort.replace("-", "");
           return a[column] > b[column] ? 1 : -1;
         } else {
           return a[sort] > b[sort] ? -1 : 1;
@@ -90,7 +102,6 @@ function App() {
       setHistory(historySorted);
     }
   }, [sort, history]);
-
   return (
     <div className="container">
       {cryptos && currencies ? (

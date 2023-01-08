@@ -1,5 +1,11 @@
 import React from "react";
 
+/**
+ * @description Popup component
+ * @param {boolean} exchangeSubmitted Boolean that show or hide the popup
+ * @param {Function} setExchangeSubmitted Function that show or hide the popup
+ * @returns {JSX}
+ */
 export const PopUp = ({ exchangeSubmitted, setExchangeSubmitted }) => {
   return (
     <div
