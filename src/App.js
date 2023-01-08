@@ -20,6 +20,17 @@ async function getHistoryPromise() {
   return await getHistory();
 };
 
+const PopUp = ({exchangeSubmitted, setExchangeSubmitted}) => {
+  return (
+    <div
+      className={`popup ${exchangeSubmitted ? 'open' : ''}`}
+      onClick={() => setExchangeSubmitted(false)}
+    >
+      <span className='heading-2'>Exchange submitted.</span>
+    </div>
+  );
+};
+
 function App() {
   const [ cryptos, setCryptos ] = useState();
   useEffect(() => {
@@ -57,6 +68,19 @@ function App() {
     }
   }, [history]);
 
+  const [exchangeSubmitted, setExchangeSubmitted] = useState(false);
+  useEffect(() => {
+    if (exchangeSubmitted) {
+      setTimeout(() => {
+        setExchangeSubmitted(false);
+      }, 10000)
+    }
+  }, [exchangeSubmitted]);
+
+  const handleOnSave = (history) => {
+    postHistory(history, setHistory, setExchangeSubmitted);
+  }
+
   return (
     <div className="container">
       {cryptos && currencies ? (
@@ -64,12 +88,13 @@ function App() {
           cryptos={cryptos}
           currencies={currencies}
           rates={rates}
-          handleOnSave={(history) => postHistory(history, setHistory)}
+          handleOnSave={handleOnSave}
         />
       ) : (
         <></>
       )}
       {history ? <History data={history} /> : <></>}
+      <PopUp exchangeSubmitted={exchangeSubmitted} setExchangeSubmitted={setExchangeSubmitted}/>
     </div>
   );
 }

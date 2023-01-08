@@ -17,11 +17,11 @@ export function getHistory() {
     });
 }
 
-export function postHistory(history, setHistory) {
+export function postHistory(history, setHistory, setExchangeSubmitted) {
   axios
     .post(`${API_URL}/history`, history)
     .then((response) => {
-      console.log(response);
+      setExchangeSubmitted(true);
       getHistory().then((h) => {
         setHistory(h);
       });
