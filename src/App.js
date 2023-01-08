@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Toolbar, History } from './components';
+import { Toolbar, History, PopUp } from './components';
 import { getCryptos, getCurrencies, getRates, getHistory, postHistory } from './middleware';
 import './App.scss';
 
@@ -18,17 +18,6 @@ async function getRatesPromise() {
 
 async function getHistoryPromise() {
   return await getHistory();
-};
-
-const PopUp = ({exchangeSubmitted, setExchangeSubmitted}) => {
-  return (
-    <div
-      className={`popup ${exchangeSubmitted ? 'open' : ''}`}
-      onClick={() => setExchangeSubmitted(false)}
-    >
-      <span className='heading-2'>Exchange submitted.</span>
-    </div>
-  );
 };
 
 function App() {
