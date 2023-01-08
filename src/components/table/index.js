@@ -1,7 +1,38 @@
 import React from "react";
 import Moment from 'react-moment';
 
-const Table = ({data}) => {
+const Table = ({ data, sort, setSort }) => {
+  const checkColumnSorted = (column) => {
+    if (sort.search(column) > -1) {
+      if (sort.search('-') > -1) {
+        return 'down';
+      }
+      return 'up'
+    }
+  };
+
+  const handleOnClick = (column) => {
+    const columnChecked = checkColumnSorted(column);
+    if (columnChecked) {
+      if (columnChecked === 'down') {
+        setSort(`${column}`);
+      } else {
+        setSort('');
+      }
+    } else {
+      setSort(`${column}-`);
+    }
+  }
+
+  const showSortImage = (column) => {
+    let html = <></>;
+    const columnChecked = checkColumnSorted(column);
+    if (columnChecked) {
+      html = <img alt={columnChecked} src={require(`../../assets/img/sort-${columnChecked}.png`)} />;
+    }
+    return html;
+  }
+
   const showData = () => {
     if (data && data.length > 0) {
       return data.map((d) => {
@@ -26,17 +57,33 @@ const Table = ({data}) => {
       <table>
         <thead>
           <tr className="table-header">
-            <td>Date & Time</td>
-            <td>Currency From</td>
-            <td>Amount 1</td>
-            <td>Currency To</td>
-            <td>Amount 2</td>
-            <td>Type</td>
+            <td onClick={() => handleOnClick("date")}>
+              {showSortImage("date")}
+              Date & Time
+            </td>
+            <td onClick={() => handleOnClick("currencyFrom")}>
+              {showSortImage("currencyFrom")}
+              Currency From
+            </td>
+            <td onClick={() => handleOnClick("amount1")}>
+              {showSortImage("amount1")}
+              Amount 1
+            </td>
+            <td onClick={() => handleOnClick("currencyTo")}>
+              {showSortImage("currencyTo")}
+              Currency To
+            </td>
+            <td onClick={() => handleOnClick("amount2")}>
+              {showSortImage("amount2")}
+              Amount 2
+            </td>
+            <td onClick={() => handleOnClick("type")}>
+              {showSortImage("type")}
+              Type
+            </td>
           </tr>
         </thead>
-        <tbody>
-          {showData()}
-        </tbody>
+        <tbody>{showData()}</tbody>
       </table>
     </div>
   );

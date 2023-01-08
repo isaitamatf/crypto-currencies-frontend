@@ -21,6 +21,8 @@ async function getHistoryPromise() {
 };
 
 function App() {
+  const [sort, setSort] = useState("");
+
   const [ cryptos, setCryptos ] = useState();
   useEffect(() => {
     if (!cryptos) {
@@ -82,7 +84,7 @@ function App() {
       ) : (
         <></>
       )}
-      {history ? <History data={history} /> : <></>}
+      {history ? <History data={history} sort={sort} setSort={setSort} /> : <></>}
       <PopUp exchangeSubmitted={exchangeSubmitted} setExchangeSubmitted={setExchangeSubmitted}/>
     </div>
   );

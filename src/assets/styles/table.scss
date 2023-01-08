@@ -13,6 +13,11 @@
           color: $dark-color;
           padding: 0 8px;
           border-right: 1px solid $grey-color;
+          > img {
+            margin-right: 8px;
+            position: relative;
+            top: 2px;
+          }
         }
         > td:first-child {
           border-top-left-radius: 4px;
