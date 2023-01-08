@@ -1,4 +1,5 @@
 export { Button } from "./button";
+export { Card } from "./card";
 export { Datepicker } from "./datepicker";
 export { Dropdown } from "./dropdown";
 export { History } from "./history";

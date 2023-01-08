@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Dropdown } from "../../components";
 import { CURRENCY_SYMBOLS } from '../../services/constants';
 
-const Toolbar = ({ cryptos, currencies, rates, handleOnSave }) => {
+const Toolbar = ({ isMobile, cryptos, currencies, rates, handleOnSave }) => {
   const [currencyFrom, setCurrencyFrom] = useState(
     cryptos ? cryptos[0].value : ""
   );
@@ -65,6 +65,7 @@ const Toolbar = ({ cryptos, currencies, rates, handleOnSave }) => {
         <div className="toolbar-container-row">
           <label>Currency from</label>
           <Dropdown
+            isMobile={isMobile}
             setOption={setCurrencyFrom}
             options={cryptos}
             optionSelected={currencyFrom}
@@ -79,12 +80,17 @@ const Toolbar = ({ cryptos, currencies, rates, handleOnSave }) => {
             min={0}
           />
         </div>
-        <div className="toolbar-container-row flex-end">
-          <span>=</span>
-        </div>
+        {!isMobile ? (
+          <div className="toolbar-container-row flex-end">
+            <span>=</span>
+          </div>
+        ) : (
+          <></>
+        )}
         <div className="toolbar-container-row">
           <label>Currency to</label>
           <Dropdown
+            isMobile={isMobile}
             setOption={setCurrencyTo}
             options={currencies}
             optionSelected={currencyTo}
@@ -96,7 +102,7 @@ const Toolbar = ({ cryptos, currencies, rates, handleOnSave }) => {
         </div>
         <div className="toolbar-container-row flex-end">
           <Button
-            text="Save"
+            text={isMobile ? "Exchange" : "Save"}
             type="primary"
             isInactive={buttonIsInactive()}
             handleOnClick={handleOnClick}

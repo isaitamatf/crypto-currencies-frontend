@@ -31,7 +31,7 @@ function useOutsideAlerter(ref, dropdownIsOpen, setDropdownIsOpen) {
  * @param {Function} setOption
  * @returns JSX
  */
-const Dropdown = ({ optionSelected, options, setOption }) => {
+const Dropdown = ({ isMobile, optionSelected, options, setOption }) => {
   //
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
   //
@@ -61,7 +61,7 @@ const Dropdown = ({ optionSelected, options, setOption }) => {
             onClick={handleOnClick}
             key={value}
           >
-            <img alt={name} src={require(`../../assets/img/${value}.png`)} />
+            {!isMobile ? <img alt={name} src={require(`../../assets/img/${value}.png`)} /> : <></>}
             <span>{name}</span>
           </div>
         );
@@ -78,10 +78,10 @@ const Dropdown = ({ optionSelected, options, setOption }) => {
     if (optionSelectedFound && !dropdownIsOpen) {
       return (
         <>
-          <img
+          {!isMobile ? (<img
             alt={optionSelectedFound.name}
             src={require(`../../assets/img/${optionSelectedFound.value}.png`)}
-          />
+          />) : <></>}
           <span>{optionSelectedFound.name}</span>
         </>
       );

@@ -22,3 +22,15 @@
     }
   }
 }
+
+@media only screen and (max-width: 786px) {
+  .history {
+    padding: 2.5% 5%;
+    > .history-container {
+      > .history-container-row {
+        width: 100%;
+        margin: 6px 4px;
+      }
+    }
+  }
+}

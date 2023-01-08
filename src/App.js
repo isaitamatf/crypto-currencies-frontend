@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Toolbar, History, PopUp } from './components';
 import { getCryptos, getCurrencies, getRates, getHistory, postHistory } from './middleware';
 import './App.scss';
+import { useMediaQuery } from "react-responsive";
 
 async function getCryptosPromise() {
   const response = getCryptos();
@@ -21,6 +22,10 @@ async function getHistoryPromise() {
 };
 
 function App() {
+  const isMobile = useMediaQuery({
+    query: "(max-width: 786px)",
+  });
+
   const [ cryptos, setCryptos ] = useState();
   useEffect(() => {
     if (!cryptos) {
@@ -90,6 +95,7 @@ function App() {
     <div className="container">
       {cryptos && currencies ? (
         <Toolbar
+          isMobile={isMobile}
           cryptos={cryptos}
           currencies={currencies}
           rates={rates}
@@ -98,8 +104,20 @@ function App() {
       ) : (
         <></>
       )}
-      {history ? <History data={history} sort={sort} setSort={setSort} /> : <></>}
-      <PopUp exchangeSubmitted={exchangeSubmitted} setExchangeSubmitted={setExchangeSubmitted}/>
+      {history ? (
+        <History
+          isMobile={isMobile}
+          data={history}
+          sort={sort}
+          setSort={setSort}
+        />
+      ) : (
+        <></>
+      )}
+      <PopUp
+        exchangeSubmitted={exchangeSubmitted}
+        setExchangeSubmitted={setExchangeSubmitted}
+      />
     </div>
   );
 }
