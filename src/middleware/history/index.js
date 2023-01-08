@@ -17,11 +17,15 @@ export function getHistory() {
     });
 }
 
-export function postHistory(history) {
+export function postHistory(history, setHistory) {
   axios
     .post(`${API_URL}/history`, history)
     .then((response) => {
       console.log(response);
+      getHistory().then((h) => {
+        setHistory(h);
+      });
+      return response;
     })
     .catch((error) => {
       console.log(error);

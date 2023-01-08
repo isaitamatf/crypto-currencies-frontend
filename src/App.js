@@ -3,20 +3,20 @@ import { Toolbar, History } from './components';
 import { getCryptos, getCurrencies, getRates, getHistory, postHistory } from './middleware';
 import './App.scss';
 
-async function cryptosPromise() {
+async function getCryptosPromise() {
   const response = getCryptos();
   return await response;
 };
 
-async function currenciesPromise() {
+async function getCurrenciesPromise() {
   return await getCurrencies();
 };
 
-async function ratesPromise() {
+async function getRatesPromise() {
   return await getRates();
 };
 
-async function historyPromise() {
+async function getHistoryPromise() {
   return await getHistory();
 };
 
@@ -24,7 +24,7 @@ function App() {
   const [ cryptos, setCryptos ] = useState();
   useEffect(() => {
     if (!cryptos) {
-      cryptosPromise().then((response) => {
+      getCryptosPromise().then((response) => {
         setCryptos(response);
       });
     }
@@ -33,7 +33,7 @@ function App() {
   const [ currencies, setCurrencies ] = useState();
   useEffect(() => {
     if (!currencies) {
-      currenciesPromise().then((response) => {
+      getCurrenciesPromise().then((response) => {
         setCurrencies(response);
       });
     }
@@ -42,7 +42,7 @@ function App() {
   const [ rates, setRates ] = useState();
   useEffect(() => {
     if (!rates) {
-      ratesPromise().then((response) => {
+      getRatesPromise().then((response) => {
         setRates(response);
       });
     }
@@ -51,7 +51,7 @@ function App() {
   const [history, setHistory] = useState();
   useEffect(() => {
     if (!history) {
-      historyPromise().then((response) => {
+      getHistoryPromise().then((response) => {
         setHistory(response);
       });
     }
@@ -64,12 +64,12 @@ function App() {
           cryptos={cryptos}
           currencies={currencies}
           rates={rates}
-          handleOnSave={postHistory}
+          handleOnSave={(history) => postHistory(history, setHistory)}
         />
-      ) : <></>}
-      {history ? (
-        <History data={history} />
-      ) : <></>}
+      ) : (
+        <></>
+      )}
+      {history ? <History data={history} /> : <></>}
     </div>
   );
 }
