@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Toolbar } from './components';
-import { getCryptos, getCurrencies, getRates, postHistory } from './middleware';
+import { getCryptos, getCurrencies, getRates, getHistory, postHistory } from './middleware';
 import './App.scss';
 
 async function cryptosPromise() {
@@ -14,6 +14,10 @@ async function currenciesPromise() {
 
 async function ratesPromise() {
   return await getRates();
+};
+
+async function historyPromise() {
+  return await getHistory();
 };
 
 function App() {
@@ -43,6 +47,15 @@ function App() {
       });
     }
   }, [rates]);
+
+  const [history, setHistory] = useState();
+  useEffect(() => {
+    if (!history) {
+      historyPromise().then((response) => {
+        setHistory(response);
+      });
+    }
+  }, [history]);
 
   return (
     <div className="container">
