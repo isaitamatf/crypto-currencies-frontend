@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Toolbar } from './components';
-import { getCryptos, getCurrencies, getRates } from './middleware';
+import { getCryptos, getCurrencies, getRates, postHistory } from './middleware';
 import './App.scss';
 
 async function cryptosPromise() {
@@ -51,6 +51,7 @@ function App() {
           cryptos={cryptos}
           currencies={currencies}
           rates={rates}
+          handleOnSave={postHistory}
         />
       ) : <></>}
     </div>

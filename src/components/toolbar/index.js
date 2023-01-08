@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Button, Dropdown } from "../index";
 import { CURRENCY_SYMBOLS } from '../../services/constants';
 
-const Toolbar = ({cryptos, currencies, rates}) => {
-  const [currencyFrom, setCurrencyFrom] = useState(cryptos ? cryptos[0].value : '');
-  const [currencyTo, setCurrencyTo] = useState(currencies ? currencies[0].value : '');
+const Toolbar = ({ cryptos, currencies, rates, handleOnSave }) => {
+  const [currencyFrom, setCurrencyFrom] = useState(
+    cryptos ? cryptos[0].value : ""
+  );
+  const [currencyTo, setCurrencyTo] = useState(
+    currencies ? currencies[0].value : ""
+  );
   const [amount1, setAmount1] = useState(1);
   const [amount2, setAmount2] = useState(0);
 
@@ -19,7 +23,7 @@ const Toolbar = ({cryptos, currencies, rates}) => {
   const onChangeAmount1 = (e) => {
     if (e && e.target) {
       const value = parseFloat(e.target.value);
-      if (typeof value === 'number' && !isNaN(value)) {
+      if (typeof value === "number" && !isNaN(value)) {
         if (value >= 0) {
           setAmount1(value);
         } else {
@@ -27,14 +31,26 @@ const Toolbar = ({cryptos, currencies, rates}) => {
         }
       }
     }
-  }
+  };
 
   const showAmount2Value = () => {
     const currentSymbol = CURRENCY_SYMBOLS.find((c) => c.value === currencyTo);
     return `${currentSymbol.symbol} ${amount2}`;
-  }
+  };
 
-  const buttonIsInactive = () => amount1 <= 0 ? true : false;
+  const buttonIsInactive = () => (amount1 <= 0 ? true : false);
+
+  const handleOnClick = () => {
+    const historySaved = {
+      date: new Date().toISOString(),
+      currencyFrom,
+      amount1,
+      currencyTo,
+      amount2,
+      type: "Exchanged",
+    };
+    handleOnSave(historySaved);
+  };
 
   return (
     <div className="toolbar">
@@ -75,7 +91,12 @@ const Toolbar = ({cryptos, currencies, rates}) => {
           <input type="text" value={showAmount2Value()} disabled />
         </div>
         <div className="toolbar-container-row flex-end">
-          <Button text="Save" type="primary" isInactive={buttonIsInactive()} />
+          <Button
+            text="Save"
+            type="primary"
+            isInactive={buttonIsInactive()}
+            handleOnClick={handleOnClick}
+          />
         </div>
       </div>
     </div>
