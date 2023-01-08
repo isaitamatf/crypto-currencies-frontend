@@ -83,7 +83,9 @@ const Table = ({ data, sort, setSort }) => {
             </td>
           </tr>
         </thead>
-        <tbody>{showData()}</tbody>
+        <tbody>
+          {showData()}
+        </tbody>
       </table>
     </div>
   );

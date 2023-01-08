@@ -21,8 +21,6 @@ async function getHistoryPromise() {
 };
 
 function App() {
-  const [sort, setSort] = useState("");
-
   const [ cryptos, setCryptos ] = useState();
   useEffect(() => {
     if (!cryptos) {
@@ -71,6 +69,22 @@ function App() {
   const handleOnSave = (history) => {
     postHistory(history, setHistory, setExchangeSubmitted);
   }
+
+  const [sort, setSort] = useState("");
+  useEffect(() => {
+    if (sort) {
+      const desc = sort.search('-');
+      const historySorted = history.sort((a, b) => {
+        if (desc > -1) {
+          const column = sort.replace('-','');
+          return a[column] > b[column] ? 1 : -1;
+        } else {
+          return a[sort] > b[sort] ? -1 : 1;
+        }
+      });
+      setHistory(historySorted);
+    }
+  }, [sort, history]);
 
   return (
     <div className="container">
