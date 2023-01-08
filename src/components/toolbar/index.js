@@ -1,9 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Dropdown } from "../index";
+import { CURRENCY_SYMBOLS } from '../../services/constants';
 
 const Toolbar = ({cryptos, currencies, rates}) => {
   const [currencyFrom, setCurrencyFrom] = useState(cryptos ? cryptos[0].value : '');
   const [currencyTo, setCurrencyTo] = useState(currencies ? currencies[0].value : '');
+  const [amount1, setAmount1] = useState(1);
+  const [amount2, setAmount2] = useState(0);
+
+  useEffect(() => {
+    const rateFound = rates.find(
+      (r) => r.currencyFrom === currencyFrom && r.currencyTo === currencyTo
+    );
+    const result = amount1 * rateFound.rate;
+    setAmount2(parseFloat(result.toFixed(2)));
+  }, [rates, currencyFrom, currencyTo, amount1]);
+
+  const onChangeAmount1 = (e) => {
+    if (e && e.target) {
+      const value = parseFloat(e.target.value);
+      if (typeof value === 'number' && !isNaN(value)) {
+        if (value >= 0) {
+          setAmount1(value);
+        } else {
+          setAmount1(0);
+        }
+      }
+    }
+  }
+
+  const showAmount2Value = () => {
+    const currentSymbol = CURRENCY_SYMBOLS.find((c) => c.value === currencyTo);
+    return `${currentSymbol.symbol} ${amount2}`;
+  }
+
+  const buttonIsInactive = () => amount1 <= 0 ? true : false;
+
   return (
     <div className="toolbar">
       <div className="toolbar-header">
@@ -20,7 +52,12 @@ const Toolbar = ({cryptos, currencies, rates}) => {
         </div>
         <div className="toolbar-container-row">
           <label>Amount</label>
-          <input type="number" />
+          <input
+            type="number"
+            onChange={onChangeAmount1}
+            defaultValue={amount1}
+            min={0}
+          />
         </div>
         <div className="toolbar-container-row flex-end">
           <span>=</span>
@@ -35,10 +72,10 @@ const Toolbar = ({cryptos, currencies, rates}) => {
         </div>
         <div className="toolbar-container-row">
           <label>Amount</label>
-          <input />
+          <input type="text" value={showAmount2Value()} disabled />
         </div>
         <div className="toolbar-container-row flex-end">
-          <Button text="Save" type="primary" />
+          <Button text="Save" type="primary" isInactive={buttonIsInactive()} />
         </div>
       </div>
     </div>
