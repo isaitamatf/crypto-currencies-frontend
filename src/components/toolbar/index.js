@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Dropdown } from "../index";
+import { Button, Dropdown } from "../../components";
 import { CURRENCY_SYMBOLS } from '../../services/constants';
 
 const Toolbar = ({ cryptos, currencies, rates, handleOnSave }) => {
@@ -34,8 +34,12 @@ const Toolbar = ({ cryptos, currencies, rates, handleOnSave }) => {
   };
 
   const showAmount2Value = () => {
-    const currentSymbol = CURRENCY_SYMBOLS.find((c) => c.value === currencyTo);
-    return `${currentSymbol.symbol} ${amount2}`;
+    if (currencyTo) {
+      const currentSymbol = CURRENCY_SYMBOLS.find(
+        (c) => c.value === currencyTo
+      );
+      return `${currentSymbol.symbol} ${amount2}`;
+    }
   };
 
   const buttonIsInactive = () => (amount1 <= 0 ? true : false);

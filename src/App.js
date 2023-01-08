@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Toolbar } from './components';
+import { Toolbar, History } from './components';
 import { getCryptos, getCurrencies, getRates, getHistory, postHistory } from './middleware';
 import './App.scss';
 
@@ -66,6 +66,9 @@ function App() {
           rates={rates}
           handleOnSave={postHistory}
         />
+      ) : <></>}
+      {history ? (
+        <History data={history} />
       ) : <></>}
     </div>
   );
