@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Button, Dropdown } from "../index";
 
-const Toolbar = ({cryptos, currencies}) => {
-  const [ currencyFrom, setCurrencyFrom ] = useState(cryptos[0].value);
-  const [ currencyTo, setCurrencyTo ] = useState(currencies[0].value);
+const Toolbar = ({cryptos, currencies, rates}) => {
+  const [currencyFrom, setCurrencyFrom] = useState(cryptos ? cryptos[0].value : '');
+  const [currencyTo, setCurrencyTo] = useState(currencies ? currencies[0].value : '');
   return (
     <div className="toolbar">
       <div className="toolbar-header">
