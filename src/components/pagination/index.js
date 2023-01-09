@@ -9,7 +9,8 @@ import React from "react";
  */
 export const Pagination = ({currentPage, setCurrentPage, total}) => {
   // Array of the pages
-  const pageControls = [...Array(total / 4).keys()];
+  const pageSize = total < 4 ? 1 : Math.ceil(total / 4);
+  const pageControls = [...Array(pageSize).keys()];
   /**
    * @description Function that show the page control
    * @returns {jsx}
