@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Table } from '../../components';
+import { Card, Table, Pagination } from '../../components';
 
 /**
  * #@description History component
@@ -7,9 +7,20 @@ import { Card, Table } from '../../components';
  * @param {Array} data Array of history exchanges
  * @param {string} sort Column name by sort
  * @param {Function} setSort Function to change the sort column
+ * @param {number} currentPage Value of the current page into the table
+ * @param {Function} setCurrentPage Function that change the current page
+ * @param {number} total Total number of rows
  * @returns {JSX}
  */
-export const History = ({ isMobile, data, sort, setSort }) => {
+export const History = ({
+  isMobile,
+  data,
+  sort,
+  setSort,
+  currentPage,
+  setCurrentPage,
+  total
+}) => {
   /**
    * @description Function that show the cards when the screen is responsive
    * @returns {JSX}
@@ -18,11 +29,7 @@ export const History = ({ isMobile, data, sort, setSort }) => {
     const html = data.map((d) => {
       return <Card data={d} />;
     });
-    return (
-      <div className="cards">
-        {html}
-      </div>
-    )
+    return <div className="cards">{html}</div>;
   };
   return (
     <div className="history">
@@ -32,7 +39,18 @@ export const History = ({ isMobile, data, sort, setSort }) => {
       <div className="history-container">
         <div className="history-container-row">Filter</div>
         <div className="history-container-row">
-          {!isMobile ? (<Table data={data} sort={sort} setSort={setSort} />) : showCards()}
+          {!isMobile ? (
+            <>
+              <Table data={data} sort={sort} setSort={setSort} />
+              <Pagination
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                total={total}
+              />
+            </>
+          ) : (
+            showCards()
+          )}
         </div>
       </div>
     </div>

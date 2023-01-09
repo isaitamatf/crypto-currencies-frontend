@@ -16,8 +16,8 @@ async function getRatesPromise() {
   return await getRates();
 };
 
-async function getHistoryPromise() {
-  return await getHistory();
+async function getHistoryPromise(sort, currentPage, pagination) {
+  return await getHistory(sort, currentPage, pagination);
 };
 
 /**
@@ -29,6 +29,17 @@ function App() {
   const isMobile = useMediaQuery({
     query: "(max-width: 786px)",
   });
+  // Hook that save the current page into the historical table
+  const [currentPage, setCurrentPage] = useState(0);
+  // Hook that sort the column selected
+  const [sort, setSort] = useState("date-");
+  // If the sort or page changes
+  useEffect(() => {
+    getHistoryPromise(sort, currentPage).then((response) => {
+      setHistory(response.result);
+      setTotal(response.total);
+    });
+  }, [sort, currentPage]);
   // Hook that save the cryptos from the API
   const [cryptos, setCryptos] = useState();
   // If the cryptos array doesn't exist then call the GET function
@@ -62,14 +73,17 @@ function App() {
 
   // Hook that save the history from the API
   const [history, setHistory] = useState();
+  // Hook that save the total history from the API
+  const [total, setTotal] = useState(0);
   // If the history array doesn't exist then call the GET function
   useEffect(() => {
     if (!history) {
-      getHistoryPromise().then((response) => {
-        setHistory(response);
+      getHistoryPromise(sort, 0).then((response) => {
+        setHistory(response.result);
+        setTotal(response.total);
       });
     }
-  }, [history]);
+  }, [history, sort]);
   // Hook that show the popup after submit the exchange
   const [exchangeSubmitted, setExchangeSubmitted] = useState(false);
   useEffect(() => {
@@ -84,24 +98,9 @@ function App() {
    * @param {Object} history Object of history
    */
   const handleOnSave = (history) => {
-    postHistory(history, setHistory, setExchangeSubmitted);
+    postHistory(sort, setCurrentPage, history, setHistory, setTotal, setExchangeSubmitted);
   };
-  // Hook that sort the column selected
-  const [sort, setSort] = useState("");
-  useEffect(() => {
-    if (sort) {
-      const desc = sort.search("-");
-      const historySorted = history.sort((a, b) => {
-        if (desc > -1) {
-          const column = sort.replace("-", "");
-          return a[column] > b[column] ? 1 : -1;
-        } else {
-          return a[sort] > b[sort] ? -1 : 1;
-        }
-      });
-      setHistory(historySorted);
-    }
-  }, [sort, history]);
+
   return (
     <div className="container">
       {cryptos && currencies ? (
@@ -115,12 +114,15 @@ function App() {
       ) : (
         <></>
       )}
-      {history ? (
+      {history && total > 0 ? (
         <History
           isMobile={isMobile}
           data={history}
           sort={sort}
           setSort={setSort}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          total={total}
         />
       ) : (
         <></>

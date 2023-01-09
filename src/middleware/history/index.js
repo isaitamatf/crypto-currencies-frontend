@@ -1,11 +1,19 @@
 import axios from "axios";
 import { API_URL } from "../../services/constants";
 
-export function getHistory() {
+export function getHistory(sort, currentPage, pagination) {
+  const params = {
+    sort: sort || "date",
+    currentPage: currentPage || 0,
+    pagination: pagination || 4
+  };
   const options = {
     method: "GET",
     url: `${API_URL}/history`,
-    params: { output: "JSON" },
+    params: {
+      ...params,
+      output: "JSON"
+    },
   };
   return axios
     .request(options)
@@ -17,13 +25,15 @@ export function getHistory() {
     });
 }
 
-export function postHistory(history, setHistory, setExchangeSubmitted) {
+export function postHistory(sort, setCurrentPage, history, setHistory, setTotal, setExchangeSubmitted) {
   axios
     .post(`${API_URL}/history`, history)
     .then((response) => {
       setExchangeSubmitted(true);
-      getHistory().then((h) => {
-        setHistory(h);
+      getHistory(sort, 0).then((h) => {
+        setHistory(h.result);
+        setTotal(h.total);
+        setCurrentPage(0);
       });
       return response;
     })
