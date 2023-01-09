@@ -45,10 +45,11 @@ function App() {
   const [sort, setSort] = useState("date-");
   // If the sort or page changes
   useEffect(() => {
-    getHistoryPromise(sort, currentPage).then((response) => {
+    getHistoryPromise(sort, currentPage, {type, fromDate, toDate}).then((response) => {
       setHistory(response.result);
       setTotal(response.total);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sort, currentPage]);
   // Hook that save the cryptos from the API
   const [cryptos, setCryptos] = useState();
