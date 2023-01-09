@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Table, Pagination } from '../../components';
+import { Card, Table, Pagination, Filter } from '../../components';
 
 /**
  * #@description History component
@@ -19,7 +19,8 @@ export const History = ({
   setSort,
   currentPage,
   setCurrentPage,
-  total
+  total,
+  setFilter,
 }) => {
   /**
    * @description Function that show the cards when the screen is responsive
@@ -37,7 +38,9 @@ export const History = ({
         <span className="heading-2">History</span>
       </div>
       <div className="history-container">
-        <div className="history-container-row">Filter</div>
+        <div className="history-container-row">
+          <Filter setFilter={setFilter} />
+        </div>
         <div className="history-container-row">
           {!isMobile ? (
             <>

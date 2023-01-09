@@ -1,11 +1,14 @@
 import axios from "axios";
 import { API_URL } from "../../services/constants";
 
-export function getHistory(sort, currentPage, pagination) {
+export function getHistory(sort, currentPage, filter) {
   const params = {
     sort: sort || "date",
     currentPage: currentPage || 0,
-    pagination: pagination || 4
+    pagination: 4,
+    type: filter.type,
+    fromDate: filter.fromDate,
+    toDate: filter.toDate
   };
   const options = {
     method: "GET",

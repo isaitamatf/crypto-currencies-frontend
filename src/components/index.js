@@ -1,6 +1,7 @@
 export { Button } from "./button";
 export { Card } from "./card";
 export { Dropdown } from "./dropdown";
+export { Filter } from "./filter";
 export { History } from "./history";
 export { Pagination } from './pagination';
 export { PopUp } from "./popup";

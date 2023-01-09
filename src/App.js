@@ -16,8 +16,8 @@ async function getRatesPromise() {
   return await getRates();
 };
 
-async function getHistoryPromise(sort, currentPage, pagination) {
-  return await getHistory(sort, currentPage, pagination);
+async function getHistoryPromise(sort, currentPage, filter) {
+  return await getHistory(sort, currentPage, filter);
 };
 
 /**
@@ -101,6 +101,17 @@ function App() {
     postHistory(sort, setCurrentPage, history, setHistory, setTotal, setExchangeSubmitted);
   };
 
+  /**
+   * @description Function that filter the history table
+   * @param {Object} filter Object with type and date ranges for the filter
+   */
+  const handleOnFilter = (filter) => {
+    getHistoryPromise(sort, 0, filter).then((response) => {
+      setHistory(response.result);
+      setTotal(response.total);
+    });
+  }
+
   return (
     <div className="container">
       {cryptos && currencies ? (
@@ -123,6 +134,7 @@ function App() {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           total={total}
+          setFilter={handleOnFilter}
         />
       ) : (
         <></>

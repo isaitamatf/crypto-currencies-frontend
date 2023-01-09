@@ -17,3 +17,17 @@ export const CURRENCY_SYMBOLS = [
     value: "cad",
   }
 ];
+export const TYPES = [
+  {
+    name: "All",
+    value: "all",
+  },
+  {
+    name: "Live",
+    value: "live",
+  },
+  {
+    name: "Exchanged",
+    value: "exchanged",
+  }
+];
