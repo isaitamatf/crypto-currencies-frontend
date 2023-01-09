@@ -3,6 +3,7 @@ import { Toolbar, History, PopUp } from './components';
 import { getCryptos, getCurrencies, getRates, getHistory, postHistory } from './middleware';
 import './App.scss';
 import { useMediaQuery } from "react-responsive";
+import { TYPES } from "./services/constants";
 
 async function getCryptosPromise() {
   return await getCryptos();
@@ -29,6 +30,15 @@ function App() {
   const isMobile = useMediaQuery({
     query: "(max-width: 786px)",
   });
+
+  // Hook that set the type option
+  const [type, setType] = useState(TYPES[0].value);
+  // Hook that set the from date
+  const today = new Date();
+  const dateSubtracted = today.setMonth(today.getMonth() - 1);
+  const [fromDate, setFromDate] = useState(dateSubtracted);
+  // Hook that set the to date
+  const [toDate, setToDate] = useState(new Date());
   // Hook that save the current page into the historical table
   const [currentPage, setCurrentPage] = useState(0);
   // Hook that sort the column selected
@@ -78,12 +88,19 @@ function App() {
   // If the history array doesn't exist then call the GET function
   useEffect(() => {
     if (!history) {
-      getHistoryPromise(sort, 0).then((response) => {
-        setHistory(response.result);
-        setTotal(response.total);
-      });
+      const defaultFilter = {
+        type: "all",
+        fromDate: dateSubtracted,
+        toDate: new Date(),
+      };
+      getHistoryPromise(sort, 0, defaultFilter).then(
+        (response) => {
+          setHistory(response.result);
+          setTotal(response.total);
+        }
+      );
     }
-  }, [history, sort]);
+  }, [history, sort, dateSubtracted]);
   // Hook that show the popup after submit the exchange
   const [exchangeSubmitted, setExchangeSubmitted] = useState(false);
   useEffect(() => {
@@ -98,19 +115,26 @@ function App() {
    * @param {Object} history Object of history
    */
   const handleOnSave = (history) => {
-    postHistory(sort, setCurrentPage, history, setHistory, setTotal, setExchangeSubmitted);
+    postHistory(
+      sort,
+      setCurrentPage,
+      history,
+      setHistory,
+      setTotal,
+      setExchangeSubmitted,
+      {type, fromDate, toDate}
+    );
   };
 
   /**
    * @description Function that filter the history table
-   * @param {Object} filter Object with type and date ranges for the filter
    */
-  const handleOnFilter = (filter) => {
-    getHistoryPromise(sort, 0, filter).then((response) => {
+  const handleOnFilter = () => {
+    getHistoryPromise(sort, 0, {type, fromDate, toDate}).then((response) => {
       setHistory(response.result);
       setTotal(response.total);
     });
-  }
+  };
 
   return (
     <div className="container">
@@ -134,7 +158,13 @@ function App() {
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
           total={total}
-          setFilter={handleOnFilter}
+          onFilter={handleOnFilter}
+          type={type}
+          setType={setType}
+          fromDate={fromDate}
+          setFromDate={setFromDate}
+          toDate={toDate}
+          setToDate={setToDate}
         />
       ) : (
         <></>

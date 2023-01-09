@@ -1,4 +1,4 @@
-import React, {useState, forwardRef } from "react";
+import React, { forwardRef } from "react";
 import Datepicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Button, Dropdown } from '../../components';
@@ -6,16 +6,24 @@ import { TYPES } from '../../services/constants';
 
 /**
  * @description Filter component
- * @param {Function} setFilter Function that send the filter object
+ * @param {Function} onFilter Function that send the filter object
+ * @param {string} type
+ * @param {Function} setType
+ * @param {string} fromDate
+ * @param {Function} setFromDate
+ * @param {string} toDate
+ * @param {Function} setToDate
  * @returns {JSX}
  */
-export const Filter = ({setFilter}) => {
-  // Hook that set the type option
-  const [optionSelected, setOptionSelected] = useState(TYPES[0].value);
-  // Hook that set the from date
-  const [fromDate, setFromDate] = useState(new Date());
-  // Hook that set the to date 
-  const [toDate, setToDate] = useState(new Date());
+export const Filter = ({
+  onFilter,
+  type,
+  setType,
+  fromDate,
+  setFromDate,
+  toDate,
+  setToDate,
+}) => {
   /**
    * @description Function that return the input for the datepicker
    * @returns {JSX}
@@ -28,20 +36,9 @@ export const Filter = ({setFilter}) => {
         ref={ref}
         defaultValue={value}
       />
-      <img alt="calendar" src={require('../../assets/img/calendar.png')} />
+      <img alt="calendar" src={require("../../assets/img/calendar.png")} />
     </div>
   ));
-
-  /**
-   * @description Function that send the filter information to the API
-   */
-  const handleOnClick = () => {
-    setFilter({
-      type: optionSelected,
-      fromDate: new Date(fromDate).toISOString(),
-      toDate: new Date(toDate).toISOString(),
-    });
-  }
   return (
     <div className="filter">
       <div className="filter-row">
@@ -73,14 +70,14 @@ export const Filter = ({setFilter}) => {
         <label>Type</label>
         <Dropdown
           options={TYPES}
-          optionSelected={optionSelected}
-          setOption={setOptionSelected}
+          optionSelected={type}
+          setOption={setType}
           isMobile
         />
       </div>
       <div className="filter-row flex-end">
-        <Button type="secondary" text="Filter" handleOnClick={handleOnClick} />
+        <Button type="secondary" text="Filter" handleOnClick={onFilter} />
       </div>
     </div>
   );
-}
+};

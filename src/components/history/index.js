@@ -10,6 +10,13 @@ import { Card, Table, Pagination, Filter } from '../../components';
  * @param {number} currentPage Value of the current page into the table
  * @param {Function} setCurrentPage Function that change the current page
  * @param {number} total Total number of rows
+ * @param {Function} onFilter
+ * @param {string} type
+ * @param {Function} setType
+ * @param {string} fromDate
+ * @param {Function} setFromDate
+ * @param {string} toDate
+ * @param {Function} setToDate
  * @returns {JSX}
  */
 export const History = ({
@@ -20,7 +27,13 @@ export const History = ({
   currentPage,
   setCurrentPage,
   total,
-  setFilter,
+  onFilter,
+  type,
+  setType,
+  fromDate,
+  setFromDate,
+  toDate,
+  setToDate
 }) => {
   /**
    * @description Function that show the cards when the screen is responsive
@@ -39,7 +52,15 @@ export const History = ({
       </div>
       <div className="history-container">
         <div className="history-container-row">
-          <Filter setFilter={setFilter} />
+          <Filter
+            onFilter={onFilter}
+            type={type}
+            setType={setType}
+            fromDate={fromDate}
+            setFromDate={setFromDate}
+            toDate={toDate}
+            setToDate={setToDate}
+          />
         </div>
         <div className="history-container-row">
           {!isMobile ? (
