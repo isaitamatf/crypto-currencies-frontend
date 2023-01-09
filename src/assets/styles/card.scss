@@ -45,10 +45,10 @@
       display: inline-block;
     }
     > .card-circle.exchanged {
-      background-color: $primary-color;
+      background-color: $secondary-color;
     }
     > .card-circle.live {
-      background-color: $secondary-color;
+      background-color: $primary-color;
     }
   }
   > .modal {
@@ -95,8 +95,13 @@
           > .modal-info-value {
             display: flex;
             .modal-info-value-type {
-              color: $primary-color;
               margin-left: 8px;
+            }
+            .modal-info-value-type.exchanged {
+              color: $secondary-color;
+            }
+            .modal-info-value-type.live {
+              color: $primary-color;
             }
             > .card-circle {
               width: 20px;
@@ -105,10 +110,10 @@
               display: inline-block;
             }
             > .card-circle.exchanged {
-              background-color: $primary-color;
+              background-color: $secondary-color;
             }
             > .card-circle.live {
-              background-color: $secondary-color;
+              background-color: $primary-color;
             }
           }
         }

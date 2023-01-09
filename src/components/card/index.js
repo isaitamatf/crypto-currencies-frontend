@@ -37,7 +37,11 @@ export const Card = ({ data }) => {
               <span className="modal-info-field">Status</span>
               <span className="modal-info-value">
                 <div className={`card-circle ${data.type.toLowerCase()}`}></div>
-                <span className="modal-info-value-type">Approved</span>
+                <span
+                  className={`modal-info-value-type ${data.type.toLowerCase()}`}
+                >
+                  Approved
+                </span>
               </span>
             </div>
             <div className="modal-info-row">
