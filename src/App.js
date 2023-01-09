@@ -131,6 +131,7 @@ function App() {
    * @description Function that filter the history table
    */
   const handleOnFilter = () => {
+    setCurrentPage(0);
     getHistoryPromise(sort, 0, {type, fromDate, toDate}).then((response) => {
       setHistory(response.result);
       setTotal(response.total);
