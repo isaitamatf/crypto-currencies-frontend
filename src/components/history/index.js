@@ -60,6 +60,7 @@ export const History = ({
             setFromDate={setFromDate}
             toDate={toDate}
             setToDate={setToDate}
+            isMobile={isMobile}
           />
         </div>
         <div className="history-container-row">

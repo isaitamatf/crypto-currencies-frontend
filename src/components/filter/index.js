@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect } from "react";
 import Datepicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Button, Dropdown } from '../../components';
@@ -13,6 +13,7 @@ import { TYPES } from '../../services/constants';
  * @param {Function} setFromDate
  * @param {string} toDate
  * @param {Function} setToDate
+ * @param {boolean} isMobile
  * @returns {JSX}
  */
 export const Filter = ({
@@ -23,7 +24,15 @@ export const Filter = ({
   setFromDate,
   toDate,
   setToDate,
+  isMobile
 }) => {
+  useEffect(() => {
+    if (isMobile) {
+      setType('all');
+      onFilter();
+    }
+  }, [isMobile, setType, onFilter]);
+
   /**
    * @description Function that return the input for the datepicker
    * @returns {JSX}
@@ -66,15 +75,17 @@ export const Filter = ({
           minDate={fromDate}
         />
       </div>
-      <div className="filter-row">
-        <label>Type</label>
-        <Dropdown
-          options={TYPES}
-          optionSelected={type}
-          setOption={setType}
-          isMobile
-        />
-      </div>
+      {isMobile ? <></> : (
+          <div className="filter-row">
+            <label>Type</label>
+            <Dropdown
+              options={TYPES}
+              optionSelected={type}
+              setOption={setType}
+              isMobile
+            />
+          </div>
+      )}
       <div className="filter-row flex-end">
         <Button type="secondary" text="Filter" handleOnClick={onFilter} />
       </div>
