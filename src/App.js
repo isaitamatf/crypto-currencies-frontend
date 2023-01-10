@@ -38,7 +38,7 @@ function App() {
   const dateSubtracted = today.setMonth(today.getMonth() - 1);
   const [fromDate, setFromDate] = useState(dateSubtracted);
   // Hook that set the to date
-  const [toDate, setToDate] = useState(today.setHours(23));
+  const [toDate, setToDate] = useState(new Date());
   // Hook that save the current page into the historical table
   const [currentPage, setCurrentPage] = useState(0);
   // Hook that sort the column selected
