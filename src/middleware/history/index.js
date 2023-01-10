@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../../services/constants";
+import moment from 'moment';
 
 export function getHistory(sort, currentPage, filter) {
   let params = {
@@ -12,8 +13,8 @@ export function getHistory(sort, currentPage, filter) {
     params = {
       ...params,
       type,
-      fromDate: new Date(fromDate).toISOString(),
-      toDate: new Date(toDate).toISOString(),
+      fromDate: moment(fromDate).set("hour", 0).set("minute", 0).toISOString(),
+      toDate: moment(toDate).set("hour", 23).set("minute", 59).toISOString(),
     };
   }
   const options = {
